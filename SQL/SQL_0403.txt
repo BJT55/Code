@@ -1,0 +1,78 @@
+复习：
+
+SQL语法：
+1.关于操作数据库
+a)创建数据库：create database xxx;
+b)显示数据库：show databases;
+c)选中数据库：use xxx;
+d)删除数据库：drop database xxx;
+
+2.操作数据表
+a)创建表：create table xxx + 数据类型;
+	（int, varchar, decimal, datatime）	
+b)查看数据表：show tables;
+c)删除数据表：drop table xxx;
+d)查看指定表结构：desc xxx;
+
+特殊手段恢复数据：
+1）数据库一般有备份；
+2）MySQL自身提供了bin log 机制；（内容庞大，不一定恢复所有数据）
+3）特殊的磁盘数据工具；
+
+-------------------------------------------------------------
+-------------------------------------------------------------
+
+增删改查：
+1）新增： insert into xxx values(...);
+
+2）查找：
+   select 语句的操作相当于得到了一个临时表; 
+
+  (a.select * from xxx; 查找所有列）
+
+  (b.select 属性名 from xxx; 查找指定列)
+	
+  (c.select age + 10 from xxx; 在表xxx中的 age列所有年龄age都加上10 ,但数据库中存储的值不变)
+
+  (d. select name, grade1+grade2+grade3 from exam; 将所有学生的成绩的总和打印)
+
+  (e.select grade1+grade2+grade3 as total from exam; 直接给当前列起一个新的名字, 
+     as (新的列名 total),as 可以省略不写,但写上更直观一些)
+
+  (f.select distinct grade1 from exam   针对查询结果去重, 
+     若为多列去重,去重列金和其他查询列的行数可能不同,导致报错,
+     可以将distinct 放在前面,后面跟去重的列,此时的意思为满足两者(或以上)的元素都重复才会      去重  
+    select distinct grade1,name from exam; 此时的意思为 当满足grade1 和 name 都重复时去重)
+
+  (g.排序 - desc 降序, - asc 升序 
+     select name,grade1 from exam order by chinese; 使用 order by 默认升序进行排序)
+     (null 默认为最小值;)
+     (select name,grade1 from exam order by grade1 desc; 降序排序)
+     (order by 还可以第表达式进行排序)
+     (select name, grade1,grade2 from exam order by grade1, grade2; 对多列进行排序,先排grade1,若相同就比较grade2)
+ 
+  (h.条件查询: 查找出符合条件的)
+     (1)select name from exam where grade1 < 60; 查找grade1小于60的人;
+     (2)select name,chinese,math from exam where chinese < math; 查找语文成绩没数学成绩好的人;
+     (3)select name, chinese+math+english from exam where chinese+math+english < 250; 查找总成绩 小于200 的人(  !! where 不能使用别名 !!);
+     (4)select name, chinese,math from exam where chinese > 70 and math > 80; 查找 语文成绩大于70 且 数学成绩大于80的学生;
+     (5)select name, chinese,math from exam where chinese > 80 or math > 90; 查找 语文成绩大于80 或者 数学成绩大于90的学生;
+     (6)select name, chinese from exam where chinese between 80 and 90; 查找语文成绩在 80~90的学生;
+     (7)select name, chinese from exam where chinese in (60,85,90); 查找语文成绩为 60,85,90 的学生;
+     (8) select * from exam where name like 's%'; 查找 名字为 s 打头的学生,' % '表示任意,' - '只能匹配一个字符;
+     (9) select name, chinese from exam where chinese = 85; 查找语文成绩为85的学生;
+     (10)select name,math from exam where math > 90 limit 3; 查找前三个数学成绩大于90分的人;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
