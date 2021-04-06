@@ -1,0 +1,73 @@
+二.数据的增删改查
+
+3.修改:
+  update [表名] set [修改的内容] where [需要修改的某属性值] ----->>   
+  update student set name = 'lalala' where num = 101;
+  (若没有 where 则代表将所有修改的列改成同一个值)
+
+
+4.删除
+  delete from [表名] where [筛选条件];
+  delete from exam where id = 3;
+
+
+
+约束:
+    对于某一列里面的值能填哪些内容,做出一定的限制
+
+1.not null(不为空,每一列独立设置)
+  create table student(id int not null, name varchar(20));
+
+2. unique 值唯一
+  create table student (id int , name varchar(20) unique);
+
+3.default 默认值填充(没有被显示指定插入什么值,就显示默认值)
+  create table student (id int not null, name varchar(20) default 'defalut name');
+
+4.primary key 主键:一条记录的唯一身份标识 ( not null + unique )
+  primary key auto_increment :自增主键(当 key 未指定为null时,自动增加一次记录将值放入)
+
+5.foreign key:外键(涉及到多个表之间关联的时候起到的作用)
+
+
+  mysql> create table class(id int primary key, name varchar(20));
+
+  mysql> create table student(id int primary key,
+    	name varchar(20),
+    	classId int,
+    	foreign key(classId) references class(id));
+  (foreign key 只能设置成另一张表的主键,在当前表可以重复)
+
+四种关系:
+1.一对一
+2.一对多
+3.多对多
+4.无关系
+
+将查询结构插入到另一个表中(必须保证查找结果的列和待插入的表中的列相匹配)
+ 
+  mysql> inser into user2 (id,name)
+    -> select id,name from user;
+
+
+更复杂的查询语句:
+
+1.聚合查询:把行之间的数据进行聚合,和列无关.
+   MySQL提供了一种现成的聚合函数:
+   count :select count(*) from user; 
+   sum / avg / max /min :
+   select sum(chinese),max(chinese),avg(chinese),min(chinese) from exam;
+	
+
+
+
+  
+
+
+
+
+
+
+
+
+
