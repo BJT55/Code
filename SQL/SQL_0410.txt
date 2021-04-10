@@ -1,0 +1,90 @@
+一.基本操作
+
+二.约束
+
+三.数据库设计:
+1.找实体
+2.找实体之间的对应关系:(一对一,一对多,多对多,没关系)
+
+四.聚类查找:(把查找的结果插入到另一个表中,目的是把数据进行聚类)
+
+datetime('2021-04-10 9:20:20');  //时间
+insert into test values(now());  // 当前时间
+
+
+
+
+group by 能够对数据进行分组,把值相同的记录归为一组.
+
+group by 能指定条件:
+聚合前,使用where指定条件;
+聚合后,使用having指定条件;
+
+where 不能再聚合后使用
+
+统计三种不同岗位的薪资平均值,保留平均值大于200的记录: 聚合后
+select role,avg(salary) from emp group by role having avg(salary) > 200;
+
+统计三种不同岗位的新知识平均值(取出 name 为  xxx 的记录) :聚合前
+select role,avg(salary) from rmp where name != 'tanglaoshi' group by role;
+
+
+
+联合查询:(多表查询)
+
+-create table class(id int, name varchar(50));
+-create table student(id int, name varchar(50), classId int);
+-select student.id, student.name, student.classId, class.id, class.name from student,class;(全排列)
++------+------+---------+------+--------+
+| id   | name | classId | id   | name   |
++------+------+---------+------+--------+
+|    1 | ppp  |       1 |    1 | java41 |
+|    1 | ppp  |       1 |    2 | java42 |
+|    2 | ggg  |       1 |    1 | java41 |
+|    2 | ggg  |       1 |    2 | java42 |
+|    3 | jojo |       2 |    1 | java41 |
+|    3 | jojo |       2 |    2 | java42 |
+|    4 | jz   |       2 |    1 | java41 |
+|    4 | jz   |       2 |    2 | java42 |
++------+------+---------+------+--------+
+
+-select student.id, student.name, student.classId, class.id, class.name from student,class
+    -> where student.classId = class.id;(筛选班级相同的)
++------+------+---------+------+--------+
+| id   | name | classId | id   | name   |
++------+------+---------+------+--------+
+|    1 | ppp  |       1 |    1 | java41 |
+|    2 | ggg  |       1 |    1 | java41 |
+|    3 | jojo |       2 |    2 | java42 |
+|    4 | jz   |       2 |    2 | java42 |
++------+------+---------+------+--------+
+
+-select student.id, student.name, student.classId, class.id, class.name from student,class
+    -> where student.classId = class.id
+    -> and class.name = 'java42';(筛选班级为java42的学生信息)
++------+------+---------+------+--------+
+| id   | name | classId | id   | name   |
++------+------+---------+------+--------+
+|    3 | jojo |       2 |    2 | java42 |
+|    4 | jz   |       2 |    2 | java42 |
++------+------+---------+------+--------+
+
+
+另一种形式:
+-select student.id, student.name, student.classId, class.id, class.name from student join class on
+    -> student.classId = class.id and
+    -> class.name = 'java42';
++------+------+---------+------+--------+
+| id   | name | classId | id   | name   |
++------+------+---------+------+--------+
+|    3 | jojo |       2 |    2 | java42 |
+|    4 | jz   |       2 |    2 | java42 |
++------+------+---------+------+--------+
+
+
+
+
+
+
+
+
