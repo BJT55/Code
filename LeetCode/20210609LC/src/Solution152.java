@@ -1,0 +1,19 @@
+class Solution152 {
+    public static int maxProduct(int[] nums) {
+        int max = Integer.MIN_VALUE, imin = 1, imax = 1;
+        for (int i = 0; i < nums.length; i++) {
+            //如果数组的数是负数
+            //那么会导致最大的变最小的，最小的变最大的。
+            //因此交换两个的值。
+            if (nums[i] < 0){
+                int tmp = imax;
+                imax = imin;
+                imin = imax;
+            }
+            imax = Math.max(imax*nums[i],nums[i]);
+            imin = Math.min(imin*nums[i],nums[i]);
+            max = Math.max(max,imax);
+        }
+        return max;
+    }
+}
