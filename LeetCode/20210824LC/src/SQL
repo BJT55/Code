@@ -1,0 +1,35 @@
+select a.Score as Score,
+(select count(distinct b.Score) from Scores b where b.Score >= a.Score) as Rank
+from Scores a
+order by a.Score DESC;
+
+select email
+from person
+group by email
+having count(email)>1;
+
+select distinct a.email
+from person a join person b
+on a.id != b.id and a.email == b.email;
+
+select c.Name as Customers
+from Customers c left join Orders o on c.Id = o.CustomerId
+where o.CustomerId is null;
+
+
+select
+    d.Name as Department,
+    e.Name as Employee,
+    e.Salary
+from Employee e join Department d on e.DepartmentId = d.Id
+where
+    (e.DepartmentId, e.Salary) in
+    (
+        select DepartmentId, max(Salary)
+        from Employee
+        group by DepartmentId
+    )
+
+
+
+
